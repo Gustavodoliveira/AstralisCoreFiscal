@@ -5,10 +5,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.models.Enterprise;
+import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.entities.UserEntity;
 
 public interface EnterpriseRepository {
 
-  Enterprise save(Enterprise enterprise);
+  Enterprise save(Enterprise enterprise, UserEntity ownerUser);
 
   Optional<Enterprise> findById(UUID id);
 

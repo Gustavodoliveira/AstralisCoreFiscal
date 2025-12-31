@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.entities.TaxApurationReportEntity;
 
-public interface TaxApurationReportRepository extends JpaRepository<TaxApurationReportEntity, UUID> {
+public interface TaxApurationReportJpaRepository extends JpaRepository<TaxApurationReportEntity, UUID> {
   List<TaxApurationReportEntity> findByEnterprise_Id(UUID enterpriseId);
 }
