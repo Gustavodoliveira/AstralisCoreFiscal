@@ -2,6 +2,9 @@ package com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.mappers;
 
 import org.springframework.stereotype.Component;
 
+import com.astralisCaerulis.AstralisCoreFiscal.Application.dtos.user.CreateUserRequest;
+import com.astralisCaerulis.AstralisCoreFiscal.Application.dtos.user.UpdateUserRequest;
+import com.astralisCaerulis.AstralisCoreFiscal.Application.dtos.user.UserResponse;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.models.User;
 import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.entities.UserEntity;
 
@@ -34,5 +37,45 @@ public class UserMapper {
         entity.getEmail(),
         entity.getPhone(),
         entity.getPassword());
+  }
+
+  // DTO -> Domain
+  public User toDomain(CreateUserRequest request) {
+    if (request == null) {
+      return null;
+    }
+
+    return new User(
+        null,
+        request.getName(),
+        request.getEmail(),
+        request.getPhone(),
+        request.getPassword());
+  }
+
+  public User toDomain(UpdateUserRequest request) {
+    if (request == null) {
+      return null;
+    }
+
+    return new User(
+        null,
+        request.getName(),
+        request.getEmail(),
+        request.getPhone(),
+        request.getPassword());
+  }
+
+  // Domain -> DTO Response
+  public UserResponse toResponse(User user) {
+    if (user == null) {
+      return null;
+    }
+
+    return new UserResponse(
+        user.getId(),
+        user.getName(),
+        user.getEmail(),
+        user.getPhone());
   }
 }
