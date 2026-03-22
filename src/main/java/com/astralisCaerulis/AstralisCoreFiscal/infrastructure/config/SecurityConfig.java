@@ -35,8 +35,9 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/users/create").permitAll()
-            .requestMatchers("/users/getById/{id}").authenticated()
-            .requestMatchers("/users/getByEmail/{email}").authenticated()
+            .requestMatchers("/users/login").permitAll()
+            .requestMatchers("/users/by-id/{id}").authenticated()
+            .requestMatchers("/users/by-email/{email}").authenticated()
             .requestMatchers("/users/delete/{id}").authenticated()
             .anyRequest().authenticated())
         .sessionManagement(session -> session

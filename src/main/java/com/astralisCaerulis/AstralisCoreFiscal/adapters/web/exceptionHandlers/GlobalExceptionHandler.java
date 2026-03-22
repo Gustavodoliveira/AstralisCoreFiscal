@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Map;
 
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.EmailAlreadyExistsException;
+import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.InvalidCredentialsException;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.UserNotFoundException;
 
 @RestControllerAdvice
@@ -29,6 +30,15 @@ public class GlobalExceptionHandler {
             "error", "Email Already Exists",
             "message", ex.getMessage(),
             "status", 409));
+  }
+
+  @ExceptionHandler(InvalidCredentialsException.class)
+  public ResponseEntity<Map<String, Object>> handleInvalidCredentials(InvalidCredentialsException ex) {
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        .body(Map.of(
+            "error", "Invalid Credentials",
+            "message", ex.getMessage(),
+            "status", 401));
   }
 
   // Race condition / Constraint violation

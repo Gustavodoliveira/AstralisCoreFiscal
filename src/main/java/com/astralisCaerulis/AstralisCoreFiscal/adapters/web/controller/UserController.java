@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.astralisCaerulis.AstralisCoreFiscal.Application.dtos.user.CreateUserRequest;
+import com.astralisCaerulis.AstralisCoreFiscal.Application.dtos.user.LoginRequest;
+import com.astralisCaerulis.AstralisCoreFiscal.Application.dtos.user.LoginResponse;
 import com.astralisCaerulis.AstralisCoreFiscal.Application.dtos.user.UserResponse;
 import com.astralisCaerulis.AstralisCoreFiscal.Application.useCases.users.CreateUserCase;
+import com.astralisCaerulis.AstralisCoreFiscal.Application.useCases.users.DeleteUserCase;
 import com.astralisCaerulis.AstralisCoreFiscal.Application.useCases.users.FindUserByEmailUseCase;
 import com.astralisCaerulis.AstralisCoreFiscal.Application.useCases.users.FindUserByIdUseCase;
+import com.astralisCaerulis.AstralisCoreFiscal.Application.useCases.users.LoginUserCase;
 import com.astralisCaerulis.AstralisCoreFiscal.Application.useCases.users.UpdateUserUseCase;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.models.User;
 import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.mappers.UserMapper;
@@ -35,6 +39,8 @@ public class UserController {
   private final UpdateUserUseCase updateUserUseCase;
   private final FindUserByEmailUseCase findUserByEmailUseCase;
   private final FindUserByIdUseCase findUserByIdUseCase;
+  private final LoginUserCase loginUserCase;
+  private final DeleteUserCase deleteUserCase;
   private final UserMapper userMapper;
   private final JwtService jwtService;
   private final UserDetailsServiceImpl userDetailsService;
@@ -50,6 +56,12 @@ public class UserController {
 
     UserResponse response = userMapper.toResponse(createdUser);
     response.setToken(token);
+    return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    LoginResponse response = loginUserCase.execute(request);
     return ResponseEntity.ok(response);
   }
 
@@ -70,8 +82,7 @@ public class UserController {
 
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<Void> deleteUser(@PathVariable String id) {
-
-    deleteUser(id);
+    deleteUserCase.execute(id);
     return ResponseEntity.noContent().build();
   }
 }
