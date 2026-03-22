@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.models.User;
 
 public interface UserRepository {
-  User save(User user);
+  User save(User userToCreate);
 
   Optional<User> findByEmail(String email);
 

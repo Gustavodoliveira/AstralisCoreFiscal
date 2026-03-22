@@ -76,6 +76,7 @@ public class UserMapper {
         user.getId(),
         user.getName(),
         user.getEmail(),
-        user.getPhone());
+        user.getPhone(),
+        null); // Token será preenchido no controller
   }
 }

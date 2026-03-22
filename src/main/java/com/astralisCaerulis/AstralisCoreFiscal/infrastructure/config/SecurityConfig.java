@@ -34,8 +34,10 @@ public class SecurityConfig {
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/astralis-fiscal/v1/auth/**").permitAll()
-            .requestMatchers("/astralis-fiscal/v1/public/**").permitAll()
+            .requestMatchers("/users/create").permitAll()
+            .requestMatchers("/users/getById/{id}").authenticated()
+            .requestMatchers("/users/getByEmail/{email}").authenticated()
+            .requestMatchers("/users/delete/{id}").authenticated()
             .anyRequest().authenticated())
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -9,6 +9,8 @@ import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.repositories.UserRepo
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
 public class CreateUserCase {
