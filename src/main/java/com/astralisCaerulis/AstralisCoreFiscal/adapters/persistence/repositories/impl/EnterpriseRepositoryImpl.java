@@ -42,6 +42,12 @@ public class EnterpriseRepositoryImpl implements EnterpriseRepository {
   }
 
   @Override
+  public Optional<Enterprise> findByCnpj(String cnpj) {
+    return jpaRepository.findByCnpj(cnpj)
+        .map(mapper::toDomain);
+  }
+
+  @Override
   public void deleteById(UUID id) {
     jpaRepository.deleteById(id);
     return;

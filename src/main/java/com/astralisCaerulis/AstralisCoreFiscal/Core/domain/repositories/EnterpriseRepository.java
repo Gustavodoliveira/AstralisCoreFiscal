@@ -13,6 +13,8 @@ public interface EnterpriseRepository {
 
   Optional<Enterprise> findById(UUID id);
 
+  Optional<Enterprise> findByCnpj(String cnpj);
+
   List<Enterprise> findByOwnerUserId(UUID ownerUserId);
 
   void deleteById(UUID id);

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 
+import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.enterprise.CnpjAlreadyExistsException;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.EmailAlreadyExistsException;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.InvalidCredentialsException;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.UserNotFoundException;
@@ -28,6 +29,15 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.CONFLICT)
         .body(Map.of(
             "error", "Email Already Exists",
+            "message", ex.getMessage(),
+            "status", 409));
+  }
+
+  @ExceptionHandler(CnpjAlreadyExistsException.class)
+  public ResponseEntity<Map<String, Object>> handleCnpjExists(CnpjAlreadyExistsException ex) {
+    return ResponseEntity.status(HttpStatus.CONFLICT)
+        .body(Map.of(
+            "error", "CNPJ Already Exists",
             "message", ex.getMessage(),
             "status", 409));
   }

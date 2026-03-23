@@ -1,6 +1,7 @@
 package com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +10,6 @@ import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.entities.Ent
 
 public interface EnterpriseJpaRepository extends JpaRepository<EnterpriseEntity, UUID> {
   List<EnterpriseEntity> findByOwnerUserId_Id(UUID ownerUserId);
+
+  Optional<EnterpriseEntity> findByCnpj(String cnpj);
 }
