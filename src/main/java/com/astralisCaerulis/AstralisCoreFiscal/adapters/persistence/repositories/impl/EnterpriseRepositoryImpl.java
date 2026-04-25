@@ -7,8 +7,9 @@ import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.models.Enterprise;
-import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.models.User;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.domain.repositories.EnterpriseRepository;
+import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.enterprise.EnterpriseNotFoundException;
+import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.entities.EnterpriseEntity;
 import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.entities.UserEntity;
 import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.mappers.EnterpriseMapper;
 import com.astralisCaerulis.AstralisCoreFiscal.adapters.persistence.repositories.EnterpriseJpaRepository;
@@ -26,6 +27,22 @@ public class EnterpriseRepositoryImpl implements EnterpriseRepository {
     var entity = mapper.toEntity(enterprise, ownerUser);
     var savedEntity = jpaRepository.save(entity);
     return mapper.toDomain(savedEntity);
+  }
+
+  @Override
+  public Enterprise update(UUID id, Enterprise enterprise) {
+    EnterpriseEntity entity = jpaRepository.findById(id)
+        .orElseThrow(() -> new EnterpriseNotFoundException("Enterprise not found with id: " + id));
+
+    entity.setEnterpriseName(enterprise.getEnterpriseName());
+    entity.setCorporateName(enterprise.getCorporateName());
+    entity.setEmail(enterprise.getEmail());
+    entity.setPhone(enterprise.getPhone());
+    entity.setStateRegistration(enterprise.getStateRegistration());
+    entity.setTaxRegime(enterprise.getTaxRegime());
+    entity.setLegalNature(enterprise.getLegalNature());
+
+    return mapper.toDomain(jpaRepository.save(entity));
   }
 
   @Override

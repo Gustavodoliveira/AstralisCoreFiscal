@@ -43,6 +43,7 @@ public class SecurityConfig {
             .requestMatchers("/users/by-id/{id}").authenticated()
             .requestMatchers("/users/by-email/{email}").authenticated()
             .requestMatchers("/users/delete/{id}").authenticated()
+            .requestMatchers("/enterprises/**").authenticated() // Protege todos endpoints do EnterpriseController
             .anyRequest().authenticated())
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

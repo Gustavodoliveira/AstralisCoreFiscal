@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Map;
 
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.enterprise.CnpjAlreadyExistsException;
+import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.enterprise.EnterpriseNotFoundException;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.EmailAlreadyExistsException;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.InvalidCredentialsException;
 import com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.user.UserNotFoundException;
@@ -40,6 +41,15 @@ public class GlobalExceptionHandler {
             "error", "CNPJ Already Exists",
             "message", ex.getMessage(),
             "status", 409));
+  }
+
+  @ExceptionHandler(EnterpriseNotFoundException.class)
+  public ResponseEntity<Map<String, Object>> handleEnterpriseNotFound(EnterpriseNotFoundException ex) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body(Map.of(
+            "error", "Enterprise not found",
+            "message", ex.getMessage(),
+            "status", 404));
   }
 
   @ExceptionHandler(InvalidCredentialsException.class)

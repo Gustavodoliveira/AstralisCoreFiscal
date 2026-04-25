@@ -11,6 +11,8 @@ public interface EnterpriseRepository {
 
   Enterprise save(Enterprise enterprise, UserEntity ownerUser);
 
+  Enterprise update(UUID id, Enterprise enterprise);
+
   Optional<Enterprise> findById(UUID id);
 
   Optional<Enterprise> findByCnpj(String cnpj);
