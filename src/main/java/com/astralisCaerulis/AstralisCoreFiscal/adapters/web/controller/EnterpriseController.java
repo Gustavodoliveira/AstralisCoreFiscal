@@ -1,5 +1,7 @@
 package com.astralisCaerulis.AstralisCoreFiscal.adapters.web.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EnterpriseController {
 
+  private static final Logger log = LoggerFactory.getLogger(EnterpriseController.class);
+
   private final CreateEnterpriseCase createEnterpriseCase;
   private final DeleteEnterpriseCase deleteEnterpriseCase;
   private final FindEnterpriseByCnpjUseCase findEnterpriseByCnpjUseCase;
@@ -59,9 +63,9 @@ public class EnterpriseController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<Void> deleteEnterprise(@PathVariable String id) {
+  public ResponseEntity<String> deleteEnterprise(@PathVariable String id) {
     deleteEnterpriseCase.execute(id);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.status(204).body("Empresa deletada com sucesso");
   }
 
   @GetMapping("/by-id/{id}")
@@ -73,9 +77,13 @@ public class EnterpriseController {
 
   @GetMapping("/by-cnpj/{cnpj}")
   public ResponseEntity<EnterpriseResponse> getEnterpriseByCnpj(@PathVariable String cnpj) {
+    log.info("Recebido CNPJ na requisição: {}", cnpj);
     var enterprise = findEnterpriseByCnpjUseCase.execute(cnpj)
-        .orElseThrow(() -> new RuntimeException("Enterprise not found with CNPJ: " + cnpj));
+        .orElseThrow(
+            () -> new com.astralisCaerulis.AstralisCoreFiscal.Core.Exceptions.enterprise.EnterpriseNotFoundException(
+                "Enterprise not found with CNPJ: " + cnpj));
     return ResponseEntity.ok(enterpriseMapper.toResponse(enterprise));
+
   }
 
 }
