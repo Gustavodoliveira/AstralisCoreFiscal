@@ -40,6 +40,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/users/create").permitAll()
             .requestMatchers("/users/login").permitAll()
+            .requestMatchers("/fiscal-report/upload-zip").permitAll()
             .requestMatchers("/users/by-id/{id}").authenticated()
             .requestMatchers("/users/by-email/{email}").authenticated()
             .requestMatchers("/users/delete/{id}").authenticated()
